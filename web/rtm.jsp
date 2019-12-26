@@ -1,4 +1,6 @@
-<%--
+<%@ page import="static com.port_mana.PortMain.DATA_HEX" %>
+<%@ page import="static com.port_mana.PortMain.BAUDRATE" %>
+<%@ page import="com.cur_mana.CurServlet" %><%--
   Created by IntelliJ IDEA.
   User: 59287
   Date: 2019/12/21
@@ -6,6 +8,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    CurServlet.portMain.mDataHexChoice = DATA_HEX;
+    String commName = "COM3";
+    CurServlet.portMain.openSerialPort(commName, BAUDRATE);
+%>
 <!doctype html>
 
 <html lang="en">
@@ -188,7 +195,7 @@
     var date = [];
     var randomData = [];
     var now=new Date();
-    for(var i = 0; i<100; i++){
+    for(var i = 0; i<10; i++){
         date.push(0);
         randomData.push(0);
     }
@@ -239,7 +246,7 @@
                 data: randomData
             }]
         });
-    }, 3000)
+    }, 5000)
 </script>
 <!--
 <script type="text/javascript">

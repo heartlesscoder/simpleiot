@@ -17,7 +17,7 @@ public class DB {
     public Connection getconnection(){
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String passwd = "zgdzdx126";
+        String passwd = "123456";
         String className = "com.mysql.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/iotdata?user=root&password=zgdzdx126&useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8";
         Connection conn ;
