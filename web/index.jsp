@@ -6,6 +6,28 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+  String path = request.getContextPath();
+  String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+  //判断传感器状态
+  String redCondition="open";
+  String rsc="";
+  String ssc="";
+  if(redCondition.equals("open"))
+  {
+      rsc="close";
+  }else{
+      rsc="open";
+  }
+  String superCondition="open";
+  if(superCondition.equals("open"))
+  {
+    ssc="close";
+  }else{
+    ssc="open";
+  }
+  //添加初始的开关状态
+%>
 <html lang="en">
 
 <head>
@@ -32,11 +54,100 @@
   <link href="assets/css/font-awesome.min.css" rel="stylesheet">
   <link href="assets/css/font-muli.css" rel='stylesheet' type='text/css'>
   <link href="assets/css/themify-icons.css" rel="stylesheet">
-
   <link href="assets/vendors/sweetalert/css/sweetalert2.min.css" rel="Stylesheet" >
+  <script>
+      var xmlHttpReq;
+      //创建一个XmlHttpRequest对象
+      function createXmlHttpRequest()
+      {
+          if(window.XMLHttpRequest)
+          {
+              xmlHttpReq = new XMLHttpRequest();//非IE浏览器
+          }else
+          {
+              xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");//IE浏览器
+          }
+      }
+      //检测用户名是否已经被注册
+      function checkUser()
+      {
+          var condition = document.getElementById("red").value;
+//首先创建精灵对象
+          createXmlHttpRequest();
+//指明准备状态改变时回调的函数名
+          xmlHttpReq.onreadystatechange=handle;
+//尝试以异步的get方式访问某个URL
+//请求服务器端的一个servlet
+          var url = "com.sensor_mana.SensorServlet?username="+condition;
+          xmlHttpReq.open("get",url,false);
+//向服务器发送请求
+          xmlHttpReq.send(null);
+      }
+      //状态发生改变时回调的函数
+      //红外的回滚函数
+      function redhandle()
+      {
+//准备状态为4
+          if(xmlHttpReq.readyState==4)
+          {
+              //响应状态码为200，代表一切正常
+              if(xmlHttpReq.status==200)
+              {
+                  var res = xmlHttpReq.responseText;
+                  alert(res);
+                  var result = document.getElementById("red");
+                  result.value = res;
+              }
+          }
+      }
+      //超声波传感器的回滚函数
+      function superhandle()
+      {
+//准备状态为4
+          if(xmlHttpReq.readyState==4)
+          {
+              //响应状态码为200，代表一切正常
+              if(xmlHttpReq.status==200)
+              {
+                  var res = xmlHttpReq.responseText;
+                  alert(res);
+                  var result = document.getElementById("super");
+                  result.value = res;//按钮上显示当前开关状态
+              }
+          }
+      }
+  </script>
 </head>
 
 <body>
+<script>
+    function redClick(){
+        var commend = "red";
+//首先创建精灵对象
+        createXmlHttpRequest();
+//指明准备状态改变时回调的函数名
+        xmlHttpReq.onreadystatechange=redhandle;
+//尝试以异步的get方式访问某个URL
+//请求服务器端的一个servlet
+        var url = "com.sensor_mana.SensorServlet?sensor="+commend;
+        xmlHttpReq.open("get",url,false);
+//向服务器发送请求
+        xmlHttpReq.send(null);
+    }
+    function superClick(){
+        var commend = "super";
+//首先创建精灵对象
+        createXmlHttpRequest();
+//指明准备状态改变时回调的函数名
+        xmlHttpReq.onreadystatechange=superhandle;
+//尝试以异步的get方式访问某个URL
+//请求服务器端的一个servlet
+        var url = "com.sensor_mana.SensorServlet?sensor="+commend;
+        xmlHttpReq.open("get",url,false);
+//向服务器发送请求
+        xmlHttpReq.send(null);
+    }
+</script>
 <div class="wrapper">
   <div class="sidebar" data-background-color="brown" data-active-color="danger">
     <div class="logo">
@@ -88,66 +199,29 @@
       </div>
       </div>
     </nav>
+
+    <form id="control" name="control" action="<%=basePath%>com.sensor_mana.SensorServlet?type=control" method="post">
+    <table width="400" height="500" border="1" align="center" style= "text-align: center;text-valign:center">
+      <tr>
+        <td>传感器</td>
+        <td>开/关</td>
+      </tr>
+      <tr>
+        <td>红外</td>
+        <td>
+          <input type="button" onClick=redClick() id="red" value = "<%=rsc%>"style="background-color: #000000;width: 76px;height: 36px;color: #FFFFFF">
+        </td>
+      </tr>
+      <tr>
+        <td>超声波</td>
+        <td>
+          <input type="button" onClick=superClick()  id="super" value = "<%=ssc%>"style="background-color: #000000;width: 76px;height: 36px;color: #FFFFFF">
+        </td>
+      </tr>
+    </table>
+    </form>
   </div>
-    <div class="content">物联网综合实习</div>
 
-    <!--   Core JS Files   -->
-    <script src="assets/vendors/jquery-3.1.1.min.js" type="text/javascript"></script>
-    <script src="assets/vendors/jquery-ui.min.js" type="text/javascript"></script>
-    <script src="assets/vendors/bootstrap.min.js" type="text/javascript"></script>
-    <script src="assets/vendors/material.min.js" type="text/javascript"></script>
-    <script src="assets/vendors/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
-    <!-- Forms Validations Plugin -->
-    <script src="assets/vendors/jquery.validate.min.js"></script>
-    <!--  Plugin for Date Time Picker and Full Calendar Plugin-->
-    <script src="assets/vendors/moment.min.js"></script>
-    <!--  Charts Plugin -->
-    <script src="assets/vendors/charts/flot/jquery.flot.js"></script>
-    <script src="assets/vendors/charts/flot/jquery.flot.resize.js"></script>
-    <script src="assets/vendors/charts/flot/jquery.flot.pie.js"></script>
-    <script src="assets/vendors/charts/flot/jquery.flot.stack.js"></script>
-    <script src="assets/vendors/charts/flot/jquery.flot.categories.js"></script>
-    <script src="assets/vendors/charts/chartjs/Chart.min.js" type="text/javascript"></script>
-
-    <!--  Plugin for the Wizard -->
-    <script src="assets/vendors/jquery.bootstrap-wizard.js"></script>
-    <!--  Notifications Plugin    -->
-    <script src="assets/vendors/bootstrap-notify.js"></script>
-    <!-- DateTimePicker Plugin -->
-    <script src="assets/vendors/bootstrap-datetimepicker.js"></script>
-    <!-- Vector Map plugin -->
-    <script src="assets/vendors/jquery-jvectormap.js"></script>
-    <!-- Sliders Plugin -->
-    <script src="assets/vendors/nouislider.min.js"></script>
-    <!--  Google Maps Plugin    -->
-    <script src="http://ditu.google.cn/maps/api/js?key=AIzaSyAurmSUEQDwY86-wOG3kCp855tCI8lHL-I"></script>
-    <!-- Select Plugin -->
-    <script src="assets/vendors/jquery.select-bootstrap.js"></script>
-
-    <!--  Checkbox, Radio, Switch and Tags Input Plugins -->
-    <script src="assets/js/bootstrap-checkbox-radio-switch-tags.js"></script>
-
-    <!-- Circle Percentage-chart -->
-    <script src="assets/js/jquery.easypiechart.min.js"></script>
-
-    <!--  DataTables.net Plugin    -->
-    <script src="assets/vendors/jquery.datatables.js"></script>
-    <!-- Sweet Alert 2 plugin -->
-    <script src="assets/vendors/sweetalert/js/sweetalert2.min.js"></script>
-    <!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-    <script src="assets/vendors/jasny-bootstrap.min.js"></script>
-    <!--  Full Calendar Plugin    -->
-    <script src="assets/vendors/fullcalendar.min.js"></script>
-    <!-- TagsInput Plugin -->
-    <script src="assets/vendors/jquery.tagsinput.js"></script>
-    <!-- Material Dashboard javascript methods -->
-    <script src="assets/js/amaze.js"></script>
-    <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-    <script src="assets/js/demo.js"></script>
-
-    <script src="assets/js/charts/flot-charts.js"></script>
-    <script src="assets/js/charts/chartjs-charts.js"></script>
-    <script src="assets/js/echarts.min.js"></script>
   </div>
 </body>
 </html>

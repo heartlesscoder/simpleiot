@@ -7,13 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
+
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" >
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" >
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png" >
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
 
     <title>中国地质大学</title>
 
@@ -21,20 +18,49 @@
     <meta name="viewport" content="width=device-width" >
 
     <!-- Bootstrap core CSS     -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" >
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" >
 
     <!--  Paper Dashboard CSS    -->
-    <link href="../assets/css/amaze.css" rel="stylesheet" >
-
+    <link href="assets/css/amaze.css" rel="stylesheet" >
     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="../assets/css/demo.css" rel="stylesheet" >
+    <link href="assets/css/demo.css" rel="stylesheet" >
 
     <!--     Fonts and icons     -->
-    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../assets/css/font-muli.css" rel='stylesheet' type='text/css'>
-    <link href="../assets/css/themify-icons.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/font-muli.css" rel='stylesheet' type='text/css'>
+    <link href="assets/css/themify-icons.css" rel="stylesheet">
+    <link href="assets/vendors/sweetalert/css/sweetalert2.min.css" rel="Stylesheet" >
+    <script>
+        var res="0";
+        var xmlHttpReq;
+        //创建一个XmlHttpRequest对象
+        function createXmlHttpRequest()
+        {
+            if(window.XMLHttpRequest)
+            {
+                xmlHttpReq = new XMLHttpRequest();//非IE浏览器
+            }else
+            {
+                xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");//IE浏览器
+            }
+        }
+        //状态发生改变时回调的函数
+        //回滚函数
+        function handle()
+        {
+//准备状态为4
+            if(xmlHttpReq.readyState==4)
+            {
+                //响应状态码为200，代表一切正常
+                if(xmlHttpReq.status==200)
+                {
+                    res = xmlHttpReq.responseText;
+                    document.getElementById("button1").innerHTML=res;
+                }
+            }
+        }
+    </script>
 
-    <link href="../assets/vendors/sweetalert/css/sweetalert2.min.css" rel="Stylesheet">
 </head>
 
 <body>
@@ -42,7 +68,7 @@
     <div class="sidebar" data-background-color="brown" data-active-color="danger">
         <div class="logo">
             <a href="http://www.cug.edu.cn/" class="simple-text">
-                <img src="/assets/img/logo3.png" />
+                <img src="assets/img/logo3.png" />
             </a>
         </div>
         <div class="logo logo-mini">
@@ -84,230 +110,167 @@
                         <i class="ti-arrow-left"></i>
                     </button>
                 </div>
-                <div class="navbar-header style="position:absolute;top:0px;left:0px;width:100%;>
-                <button type="button" class="navbar-toggle" data-toggle="collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#"> 实时监控 </a>
+                <div class="navbar-header style=" position:absolute;top:0px;left:0px;width:100%;>
+                    <a class="navbar-brand" href="#">实时数据</a>
+                </div>
             </div>
-            <div id="main" style="position:absolute;top:160px;left:20px;width:45%;height:300px;;text-align: center;">
-            </div>
-            <div id="main2" style="position:absolute;top:160px;left:550px;width:45%;height:300px;text-align: center;">
-            </div>
-    </div>
         </nav>
+        <div id="main" style="position:absolute;top:160px;left:20px;width:60%;height:300px;text-align: center;">
+        </div>
+    </div>
 </div>
-</div>
-<!--   Core JS Files   -->
-<script src="../assets/vendors/jquery-3.1.1.min.js" type="text/javascript"></script>
-<script src="../assets/vendors/jquery-ui.min.js" type="text/javascript"></script>
-<script src="../assets/vendors/bootstrap.min.js" type="text/javascript"></script>
-<script src="../assets/vendors/material.min.js" type="text/javascript"></script>
-<script src="../assets/vendors/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
-<!-- Forms Validations Plugin -->
-<script src="../assets/vendors/jquery.validate.min.js"></script>
-<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
-<script src="../assets/vendors/moment.min.js"></script>
-<!--  Plugin for the Wizard -->
-<script src="../assets/vendors/jquery.bootstrap-wizard.js"></script>
-<!--  Notifications Plugin    -->
-<script src="../assets/vendors/bootstrap-notify.js"></script>
-<!-- DateTimePicker Plugin -->
-<script src="../assets/vendors/bootstrap-datetimepicker.js"></script>
-<!--  Checkbox, Radio, Switch and Tags Input Plugins -->
-<script src="../assets/js/bootstrap-checkbox-radio-switch-tags.js"></script>
-<!-- Vector Map plugin -->
-<script src="../assets/vendors/jquery-jvectormap.js"></script>
-<!-- Sliders Plugin -->
-<script src="../assets/vendors/nouislider.min.js"></script>
-<!--  Google Maps Plugin    -->
-<script src="http://ditu.google.cn/maps/api/js?key=AIzaSyAurmSUEQDwY86-wOG3kCp855tCI8lHL-I"></script>
-<!-- Select Plugin -->
-<script src="../assets/vendors/jquery.select-bootstrap.js"></script>
-<!--  DataTables.net Plugin    -->
-<script src="../assets/vendors/jquery.datatables.js"></script>
-<!-- Sweet Alert 2 plugin -->
-<script src="../assets/vendors/sweetalert/js/sweetalert2.min.js"></script>
-<!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-<script src="../assets/vendors/jasny-bootstrap.min.js"></script>
-<!--  Full Calendar Plugin    -->
-<script src="../assets/vendors/fullcalendar.min.js"></script>
-<!-- TagsInput Plugin -->
-<script src="../assets/vendors/jquery.tagsinput.js"></script>
-<!-- Material Dashboard javascript methods -->
-<script src="../assets/js/amaze.js"></script>
-<!-- Material Dashboard DEMO methods, don't include it in your project! -->
-<script src="../assets/js/demo.js"></script>
-<script src="../assets/js/echarts.min.js"></script>
+<!--echart动态更新数据图-->
+<script type="text/javascript" src="js/echarts.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui.min.js" type="text/javascript"></script>
+<!--
 <script type="text/javascript">
-
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
-    loadXMLDoc();
-    setInterval(function () {
-        loadXMLDoc();
-        loadXMLDocPost();
-        // alert("你是猪！");
-    }, 5000);
-    //loadXMLDoc();
-    function loadXMLDoc() {
-        var xmlhttp;
-        if (window.XMLHttpRequest) {
-            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
-            xmlhttp = new XMLHttpRequest();
+    var myChart = echarts.init(document.getElementById('main2'));
+    var date = [];
+    var data = [];
+    var now = new Date();
+    var init0=0;
+    function addData(shift0) {
+        now = new Date();
+        now = [now.getHours(), now.getMinutes() , now.getSeconds()].join(':');
+        date.push(now);
+        data.push(init0+=2);
+        if (shift0) {
+            date.shift();
+            data.shift();
         }
-        else {
-            // IE6, IE5 浏览器执行代码
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                var response = eval("(" + xmlhttp.responseText + ")");
-                var a = new Array();
-                var b=[0,80,63]
-                //alert(response[0].id);
-                a[0] = response[0].id;
-                a[1] = response[1].id;
-                a[2] = response[2].id;
-
-                //setTimeout(function () {
-                myChart.setOption(Ultrasonic(a, b));
-                //},5000);
-
-                //alert(response[2].name);
-                //document.getElementById("myDiv").innerHTML = response[2].name;
-                //document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
-            }
-        }
-        xmlhttp.open("GET", "https://api.zizhu.cug.edu.cn/api/Example/users", true);
-        xmlhttp.send();
+    }
+    for (var i = 1; i < 10; i++) {
+        addData();
     }
 
-    function loadXMLDocPost() {
-        var xmlhttp;
-        if (window.XMLHttpRequest) {
-            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
-            xmlhttp = new XMLHttpRequest();
-        }
-        else {
-            // IE6, IE5 浏览器执行代码
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 201) {
-                //var json = eval("(" + xmlhttp.responseText + ")");
-                var json = JSON.parse(xmlhttp.responseText);
-                //alert(json.id);
-                //document.getElementById("myDiv").innerHTML = json.id + "-" + json.name + "-" + json.email + "-" + json.passage;
-                //document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    option = {
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: date
+        },
+        yAxis: {
+            boundaryGap: [0, '50%'],
+            type: 'value'
+        },
+        series: [
+            {
+                name:'数据',
+                type:'line',
+                smooth:true,
+                symbol: 'none',
+                stack: 'a',
+                areaStyle: {
+                    normal: {}
+                },
+                data: data
             }
-        }
-        xmlhttp.open("POST", "https://api.zizhu.cug.edu.cn/api/Example/users", true);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("name=Henry&email=123@163.com&message=你是猪");
-    }
-
-    //a = [0, 5, 10, 15, 20, 25, 30, 35, 40];
-    //b = [0, 12, 22, 56, 25, 100, 95, 85, 105];
-
-    // 基于准备好的dom，初始化echarts实例
-    // var myChart = echarts.init(document.getElementById('main'));
-    function Ultrasonic(a, b) {
-
-
-        // 指定图表的配置项和数据
-        var option = {
-            title: {
-                text: '超声波测距'
-            },
-            tooltip: {},
-            legend: {
-                data: ['距离']
-            },
+        ]
+    };
+    setInterval(function (data,date) {
+        addData(true);
+        myChart.setOption({
             xAxis: {
-                data: a,
-                name: '时间/s',
-            },
-            yAxis: {
-                name: '距离/cm',
+                data: date
             },
             series: [{
-                name: '距离',
-                type: 'line',
-                //smooth:true,
-                data: b
+                name:'数据',
+                data: data
             }]
-        };
-        return option;
-        // 使用刚指定的配置项和数据显示图表。
-    }
-    //a = [0, 5, 10, 15, 20, 25, 30, 35, 40];
-    //b = [0, 12, 22, 56, 25, 100, 95, 85, 105];
-
-    //    myChart.setOption(Ultrasonic(a, b));
-
-
-
-
-    var c = [5, 10, 15, 20, 25];
-    var d = [-1, 1, -1, 1, -1];
-    // 基于准备好的dom，初始化echarts实例
-    var myChart2 = echarts.init(document.getElementById('main2'));
-    function infra_red_inspection(a, b) {
-        // 指定图表的配置项和数据
-        var option = {
-            title: {
-                text: '人体红外检测'
-            },
-            tooltip: {},
-            legend: {
-                data: ['检测结果']
-            },
-            xAxis: {
-                data: c,
-                name: '时间/s',
-            },
-            yAxis: {
-                name: '检测结果',
-            },
-            series: [{
-                name: '检测结果',
-                type: 'bar',
-                //smooth:true,
-                data: d
-            }]
-        };
-        return option;
-    }
-    // 使用刚指定的配置项和数据显示图表。
-    myChart2.setOption(infra_red_inspection(c, d));
-    //a = [0, 5, 10, 15,20];
-    //b = [0, 45, 30, 56, 25];
-    //setTimeout(function () {
-    //    myChart.setOption(Ultrasonic(a, b));//1秒后执行
-    //}, 10000);
-
-
-    function sleep(numberMillis) {
-        var now = new Date();
-        var exitTime = now.getTime() + numberMillis;
-        while (true) {
-            now = new Date();
-            if (now.getTime() > exitTime)
-                return;
-        }
-    }
-
+        });
+    }, 1000);
 </script>
+-->
+<script>
+    var myChart = echarts.init(document.getElementById('main'));
+    var date = [];
+    var randomData = [];
+    var now=new Date();
+    for(var i = 0; i<100; i++){
+        date.push(0);
+        randomData.push(0);
+    }
+    // 指定图表的配置项和数据
+    var option = {
+        xAxis: {
+            type: 'category',
+            data: date
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: randomData,
+            type: 'line'
+        }]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
 
-<!--<script>
-    $(document).ready(function () {
-        demo.initSmallGoogleMaps();
-    });
-</script>-->
+
+    setInterval(function(){
+        var commend = "requiredata";
+//首先创建精灵对象
+        createXmlHttpRequest();
+//指明准备状态改变时回调的函数名
+        xmlHttpReq.onreadystatechange=handle;
+//尝试以异步的get方式访问某个URL
+//请求服务器端的一个servlet
+        var url = "com.cur_mana.CurServlet?commend="+commend;
+        xmlHttpReq.open("get",url,false);
+//向服务器发送请求
+        xmlHttpReq.send(null);
+
+
+
+        randomData.push(res);
+        randomData.shift();
+        now=new Date();
+        now = [now.getHours(), now.getMinutes() , now.getSeconds()].join(':');
+        date.push(now);
+        date.shift();
+        myChart.setOption({
+            xAxis: {
+                data: date
+            },
+            series: [{
+                data: randomData
+            }]
+        });
+    }, 3000)
+</script>
+<!--
+<script type="text/javascript">
+    // based on prepared DOM, initialize echarts instance
+    var myChart = echarts.init(document.getElementById('main2'));
+
+    // specify chart configuration item and data
+    var option = {
+        title: {
+            text: 'ECharts entry example'
+        },
+        tooltip: {},
+        legend: {
+            data:['Sales']
+        },
+        xAxis: {
+            data: ["shirt","cardign","chiffon shirt","pants","heels","socks"]
+        },
+        yAxis: {},
+        series: [{
+            name: 'Sales',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
+
+    // use configuration item and data specified to show chart
+    myChart.setOption(option);
+</script>
+-->
+<button id="button1"style="background-color: #000000;width: 76px;height: 36px;color: #FFFFFF">123</button>
 </body>
 </html>
 

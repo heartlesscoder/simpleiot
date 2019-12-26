@@ -3,4 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
+    <servlet>
+        <servlet-name>SensorServlet</servlet-name>
+        <servlet-class>com.sensor_mana.SensorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SensorServlet</servlet-name>
+        <url-pattern>/com.sensor_mana.SensorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CurServlet</servlet-name>
+        <servlet-class>com.cur_mana.CurServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CurServlet</servlet-name>
+        <url-pattern>/com.cur_mana.CurServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>
